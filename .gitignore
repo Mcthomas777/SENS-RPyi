@@ -1,0 +1,10 @@
+__pycache__
+*.ipynb_checkpoints
+*.bag
+
+/Calibration_IMU_CAM/Camera_calibration/Result_other
+/Calibration_IMU_CAM/Camera_calibration/Codes/Camera_calib_1
+
+/Calibration_IMU_CAM/Allan_Variance
+
+
