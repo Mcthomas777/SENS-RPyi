@@ -1,9 +1,10 @@
 # RPyi-SENS
 
-Hi everyone, this GitHub has been created for my project RPyi - SENS, that stand for Raspberry Pi / Py - Stars Extraction Navigation System. <br />
+This GitHub has been created for project RPyi - SENS, that stand for Raspberry Pi / Py - Stars Extraction Navigation System. <br />
 As it is called, system will have to refind its attitude regarding stars position at a t-time, attitude of the holder must been has precise as it can, 
 regarding the technologies used. <br />
-Also as I'm new on github as on python, please I'm asking you to be tolerant, and all suggestions/recommandations are welcomed at the following adress : j.thomas15@outlook.fr
+
+If any questions, contact : j.thomas15@outlook.fr
 
 
 ## 1) What the purposes ?
