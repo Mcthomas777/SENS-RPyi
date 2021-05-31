@@ -12,6 +12,7 @@ To process Allan Variance, you either have the choice to run it on MATLAB, or us
    Below, an example of how csv header should look like (colomns does not matter that much, you just have to change the value of each in the code).
 
 ===================================================
+
 "timestamp","omega_x",...,"omega_z",...,"alpha_z"
 	
 *Warning* : Even people walking around, or small vibrations can disturb recording, so be carefull where you set your experience
@@ -32,5 +33,5 @@ For *Python*, just open **Allan_Variance.ipynb** with Jupyter Notebook.
 ![allan chart acceleration](Results/Va_accel_py_fusoff_1.png)
 ![allan chart acceleration](Results/Va_accel_py_fusoff_2.png)
 
-![allan chart angular velocity](Results/Va_gyro_py_fusoff_1.jpg)
-![allan chart angular velocity](Results/Va_gyro_py_fusoff_2.jpg)
+![allan chart angular velocity](Results/Va_gyro_py_fusoff_1.png)
+![allan chart angular velocity](Results/Va_gyro_py_fusoff_2.png)
