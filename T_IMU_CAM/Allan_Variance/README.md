@@ -12,8 +12,7 @@ To process Allan Variance, you either have the choice to run it on MATLAB, or us
    Below, an example of how csv header should look like (colomns does not matter that much, you just have to change the value of each in the code).
 
 ===================================================
-"timestamp","omega_x",...,"omega_z",...,"alpha_z",
-===================================================
+"timestamp","omega_x",...,"omega_z",...,"alpha_z"
 	
 *Warning* : Even people walking around, or small vibrations can disturb recording, so be carefull where you set your experience
 Also, make sure to disable any data fusion or calibration algorithm that could "fake" your data set.
@@ -25,13 +24,13 @@ For *MATLAB*, you can follow hyper link to have more information, about allan va
 For *Python*, just open **Allan_Variance.ipynb** with Jupyter Notebook.
 
 ### Example Plot - IMU Bricks 2.0 _ MATLAB
-![allan chart acceleration](T_IMU_CAM/Allan_Variance/Results/IMU_acceleration.jpg)
+![allan chart acceleration](Results/IMU_acceleration.jpg)
 
-![allan chart angular velocity](T_IMU_CAM/Allan_Variance/Results/IMU_gyro.jpg)
+![allan chart angular velocity](Results/IMU_gyro.jpg)
    
 ### Example Plot - IMU Bricks 2.0 _ Python
-![allan chart acceleration](T_IMU_CAM/Allan_Variance/Results/Va_accel_py_fusoff_1.png)
-![allan chart acceleration](T_IMU_CAM/Allan_Variance/Results/Va_accel_py_fusoff_2.png)
+![allan chart acceleration](Results/Va_accel_py_fusoff_1.png)
+![allan chart acceleration](Results/Va_accel_py_fusoff_2.png)
 
-![allan chart angular velocity](T_IMU_CAM/Allan_Variance/Results/Va_gyro_py_fusoff_1.jpg)
-![allan chart angular velocity](T_IMU_CAM/Allan_Variance/Results/Va_gyro_py_fusoff_2.jpg)
+![allan chart angular velocity](Results/Va_gyro_py_fusoff_1.jpg)
+![allan chart angular velocity](Results/Va_gyro_py_fusoff_2.jpg)
