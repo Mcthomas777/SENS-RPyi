@@ -44,7 +44,7 @@ Also, you can find the output files of the calibration, so informations about ch
 
 For example, you have these kind of reprojection error plot :
 ### Example Plot - Reprojection error - Resolution (2048*1472 [4:3]) & python output
-![Reprojection error](T_IMU_CAM/Examples/Results/Repro_e.png)
+![Reprojection error](T_IMU_CAM/Examples/Results/Repro_e.PNG)
  
 
 
