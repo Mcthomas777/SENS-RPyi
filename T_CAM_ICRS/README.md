@@ -24,6 +24,10 @@ You can ajust the program either to manage both or only one parameters. And you 
 For the localisation error, it is based on a [publication](https://ieeexplore.ieee.org/document/1008988).
 Objective is to understand the impact of different parameters as number of detectable stars, field of view, number of pixel, and centroid error.
 
+##Lost In Space Approach solution
+
+To solve LIS problem, Astrometry is used. 
+It is a software that you can find both online and also download, with a picture and a star catalog, it can find your ICRS attitude (RA/DEC).
 
  
 
