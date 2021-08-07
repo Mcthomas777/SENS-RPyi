@@ -1,0 +1,22 @@
+#Execution at RPi boot
+
+Add this file to your Desktop: test_code.py (run it to check that it works for you)
+
+'''
+from os.path import expanduser
+import datetime
+
+file = open(expanduser("~") + '/Desktop/HERE.txt', 'w')
+file.write("It worked!\n" + str(datetime.datetime.now()))
+file.close()
+Run the following commands:
+'''
+
+2) sudo cp -i ~/Desktop/test_code.py /bin
+
+3) sudo crontab -e
+
+	*Add the following line and save it:*
+
+	@reboot python /bin/test_code.py &
+
