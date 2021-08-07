@@ -3,10 +3,10 @@
 ## Physical conception
 [add a picture of proto]
 Prototype is made of :
--**Environnement** Raspberry Pi 4 8Go [link](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) 
--**Camera Module** Raspberry Pi - Picamera v2.1 [link](https://www.raspberrypi.org/products/camera-module-v2/)
--**IMU** TinkerForge - IMU Brick 2.0 [link](https://www.tinkerforge.com/en/shop/imu-v2-brick.html)
--**Other** : state switches (with 2 positions), cable for IMU (usb-usbA), and the case have been specially designed
+- **Environnement** Raspberry Pi 4 8Go [link](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) 
+- **Camera Module** Raspberry Pi - Picamera v2.1 [link](https://www.raspberrypi.org/products/camera-module-v2/)
+- **IMU** TinkerForge - IMU Brick 2.0 [link](https://www.tinkerforge.com/en/shop/imu-v2-brick.html)
+- **Other** : state switches (with 2 positions), cable for IMU (usb-usbA), and the case have been specially designed
 
 ## Principle of working
 ### Data acquisition 
