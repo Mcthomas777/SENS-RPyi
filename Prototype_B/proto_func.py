@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 from astropy.io import fits
 from astropy.io.fits import Header
                 
-def Take(iso, s_speed, imu, gps, path_img, rlb, t, b):
+def Take(iso, s_speed, imu, gps, path_img, rlb, t, b, h):
     
     """  
     camera.brightness = 50 (0 to 100)
@@ -36,7 +36,7 @@ def Take(iso, s_speed, imu, gps, path_img, rlb, t, b):
     imu.leds_off()
     
     i = 0
-    camera = PiCamera(resolution=(1472, 1472), framerate = Fraction(1, 2))
+    camera = PiCamera(resolution=(2656, 2640), framerate = Fraction(1, 2))
     camera.shutter_speed = s_speed
     camera.iso = iso
     time.sleep(30)
@@ -47,7 +47,7 @@ def Take(iso, s_speed, imu, gps, path_img, rlb, t, b):
     while True :
         #Capturing pictures, LEDS can be remove, just to let us know that program is running, when not using screen
         imu.leds_on()
-        img = np.empty((1472, 1472, 3), dtype=np.uint8)
+        img = np.empty((2656, 2640, 3), dtype=np.uint8)
         img = camera.capture(path_img + "/img_{0}.data".format(i), 'rgb')
         GPS = get_GPS(gps, 1)#GPS = [date_gps, time_gps, lat, ns, long, ew,h, geoidal_separation] 
         lat = str(GPS[2]/1000000.0) + GPS[3] #DDdddd
@@ -56,13 +56,14 @@ def Take(iso, s_speed, imu, gps, path_img, rlb, t, b):
         head,r,p = imu.get_orientation()
         T = get_T(t)
         P = get_P(b)
+        H = get_H(h)
         quat = [x/16384,y/16384,z/16384,w/16384]
         euler = [head/16, r/16, p/16]
         imu.leds_off()
         
         #Converting into FITS
-        width = 1472
-        height = 1472
+        width = 2656
+        height = 2640
         fwidth = (width + 31) // 32 * 32
         fheight = (height + 15) // 16 * 16
         image = np.fromfile(path_img + "/img_{0}.data".format(i), dtype=np.uint8).reshape((fheight, fwidth, 3))
@@ -79,7 +80,7 @@ def Take(iso, s_speed, imu, gps, path_img, rlb, t, b):
                       'NAXIS2': 1472, 'CTYPE3':'RGB','DATE':GPS[0], 'TIME':GPS[1], 'LAT':lat ,
                       'LONG':long, 'ALT':GPS[6]/100, 'q_x': quat[0], 'q_y':quat[1], 'q_z' : quat[2], 'q_w' : quat[3],
                       'head' : euler[0], 'roll' : euler[1], 'pitch' : euler[2], 'ISO' : iso, 'EXP. TIME' : s_speed,
-                     'T' : T, 'P' : P})
+                     'T' : T, 'P' : P, 'H_R': H})
         hdu = fits.PrimaryHDU(p_fits, header = hdr)
         hdul = fits.HDUList([hdu])
         hdr  = hdul[0].header
@@ -97,7 +98,7 @@ def Take(iso, s_speed, imu, gps, path_img, rlb, t, b):
 def darks(iso, s_speed, path_img):
     
     i = 0
-    camera = PiCamera(resolution=(1472, 1472), framerate = Fraction(1, 2))
+    camera = PiCamera(resolution=(2656, 2640), framerate = Fraction(1, 2))
     camera.shutter_speed = s_speed
     camera.iso = iso
     time.sleep(30)
@@ -105,7 +106,7 @@ def darks(iso, s_speed, path_img):
     camera.awb_mode = 'off'
     
     while i<50 :
-        img = np.empty((1472, 1472, 3), dtype=np.uint8)
+        img = np.empty((2656, 2640, 3), dtype=np.uint8)
         img = camera.capture(path_img + "/dark_{0}.data".format(i), 'rgb')
         i+=1
     
@@ -175,6 +176,10 @@ def get_P(b):
     '''
     P = b.get_air_pressure()
     return P/1000 #output is originally in 1/1000 hPa
+
+def get_H(h):
+    H = h.get_humidity()
+    return H/100
 
   
 

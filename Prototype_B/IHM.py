@@ -5,6 +5,7 @@ from tinkerforge.bricklet_gps_v2 import BrickletGPSV2
 from tinkerforge.bricklet_temperature_v2 import BrickletTemperatureV2
 from tinkerforge.bricklet_barometer_v2 import BrickletBarometerV2
 from tinkerforge.bricklet_rgb_led_button import BrickletRGBLEDButton
+from tinkerforge.bricklet_humidity_v2 import BrickletHumidityV2
 from scipy.spatial.transform import Rotation as R
 import astropy.units as u
 from astropy.time import Time
@@ -35,6 +36,9 @@ imu = IMU(UID_imu, ipcon)
   
 UID_GPS = "PuL"
 gps = BrickletGPSV2(UID_GPS, ipcon)
+
+UID_h = "NQB"
+h_r = BrickletHumidityV2(UID_h, ipcon)
 
 ipcon.connect(HOST, PORT)
 
@@ -105,7 +109,7 @@ def Init_test(lcd):
     lcd.write_line(3, 3, "Initializing...")
     time.sleep(2)
     
-def boresight_axis_est(gps, imu, lcd):
+def boresight_axis_est(gps, imu, lcd,temp,b,h_r):
     '''
     Combining position information (GPS), GPS time (UTC), orientation of camera, and harmonisation matrices
     We can figure out the attitude of the camera, i.e. the direction where the camera is pointing
@@ -113,9 +117,9 @@ def boresight_axis_est(gps, imu, lcd):
     coherent informations with your camera attitude
     '''
     # CAM/UMI     X         Y           Z
-    cam_IMU = [[0.1318, -0.9912, -0.01120],
-               [-0.9908, -0.1321, 0.0285], 
-               [-0.0297, 0.0073, -0.9995]]
+    cam_IMU = [[-0.1166, -0.9927, 0.03116],
+               [-0.9905, 0.1185, 0.0699], 
+               [-0.0731, -0.0227, -0.9970]]
     IMU_cam = np.transpose(cam_IMU)
     r_cam_IMU = R.from_matrix(cam_IMU)
     r_IMU_cam = R.from_matrix(IMU_cam)
@@ -165,10 +169,12 @@ def boresight_axis_est(gps, imu, lcd):
         #As euler angle are less accurate we basically choose quat
     #     x_came, y_came, z_came = (r_IMU_cam*r_imu_g_e).as_euler('zxy', degrees = True)
     #     print( x_came , y_came,  -z_came-90 )
-      
+        T = f.get_T(temp)
+        P = f.get_P(b)
+        H = h_r.get_humidity()
 
         #local frame
-        local_frame = AltAz(obstime=t,location=loc)
+        local_frame = AltAz(obstime=t,location=loc, pressure = P*u.hPa, temperature = T*u.deg_C, relative_humidity =(H/100)*u.pct)
         az = Angle(x_cam*u.deg)#Angle(y_cam*u.deg)#.wrap_at()
         alt = Angle( (z_cam)*u.deg) #Angle(z_cam*u.deg)#.wrap_at()
 
@@ -304,11 +310,11 @@ while again_st == True:
     os.system('sudo chmod 777 /home/pi/Desktop/Proto_b/Try_{0}'.format(datetime_gps))
 
 
-    th1 = threading.Thread(target = f.Take, args = [iso, s_speed, imu, gps, path_dir, rlb, t, b])
+    th1 = threading.Thread(target = f.Take, args = [iso, s_speed, imu, gps, path_dir, rlb, t, b, h_r])
     th2 = threading.Thread(target = f.data_a, args = [imu, ipcon, path_dir, gps, rlb])
     th3 = threading.Thread(target = reel_time_window, args = [lcd,t,b, path_dir, rlb])
 
-    boresight_axis_est(gps, imu, lcd)
+    boresight_axis_est(gps, imu, lcd,t, b, h_r)
     Init_test(lcd)
 
     if csv_st == True:
